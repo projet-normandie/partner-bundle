@@ -5,13 +5,11 @@ Master
 ------
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/PartnerBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/projet-normandie/PartnerBundle/?branch=master)
-[![Build Status](https://travis-ci.org/projet-normandie/PartnerBundle.svg?branch=master)](https://travis-ci.org/projet-normandie/PartnerBundle)
 
 Develop
 -------
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/projet-normandie/PartnerBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/projet-normandie/PartnerBundle/?branch=develop)
-[![Build Status](https://travis-ci.org/projet-normandie/PartnerBundle.svg?branch=develop)](https://travis-ci.org/projet-normandie/PartnerBundle)
 
 Installation
 ============
