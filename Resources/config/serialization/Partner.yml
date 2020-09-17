@@ -1,0 +1,17 @@
+ProjetNormandie\PartnerBundle\Entity\Partner:
+  attributes:
+    id:
+      groups:
+        - 'partner.read'
+    libPartner:
+      groups:
+        - 'partner.read'
+    url:
+      groups:
+        - 'partner.read'
+    status:
+      groups:
+        - 'partner.read'
+    description:
+      groups:
+        - 'partner.read'

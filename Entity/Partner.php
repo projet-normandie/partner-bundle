@@ -6,12 +6,20 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Partner
  *
  * @ORM\Table(name="partner")
  * @ORM\Entity(repositoryClass="ProjetNormandie\PartnerBundle\Repository\PartnerRepository")
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "status": "exact",
+ *     }
+ * )
  */
 class Partner implements TimestampableInterface
 {
@@ -25,7 +33,7 @@ class Partner implements TimestampableInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="idPartner", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -96,7 +104,7 @@ class Partner implements TimestampableInterface
      * @param integer $id
      * @return $this
      */
-    public function setIdPartner(int $id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
