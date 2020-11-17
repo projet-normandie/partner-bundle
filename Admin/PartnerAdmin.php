@@ -2,7 +2,6 @@
 
 namespace ProjetNormandie\PartnerBundle\Admin;
 
-use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -11,6 +10,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use ProjetNormandie\PartnerBundle\Entity\Partner;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PartnerAdmin extends AbstractAdmin
 {
@@ -18,7 +20,7 @@ class PartnerAdmin extends AbstractAdmin
 
 
     /**
-     * @inheritdoc
+     * @param RouteCollection $collection
      */
     protected function configureRoutes(RouteCollection $collection)
     {
@@ -26,12 +28,12 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @inheritdoc
+     * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('idPartner', 'text', ['label' => 'idPartner', 'attr' => ['readonly' => true]])
-            ->add('libPartner', 'text', ['label' => 'libCategory'])
+        $formMapper->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
+            ->add('libPartner', TextType::class, ['label' => 'libCategory'])
             ->add(
                 'status',
                 ChoiceType::class,
@@ -40,14 +42,22 @@ class PartnerAdmin extends AbstractAdmin
                     'choices' => Partner::getStatusChoices(),
                 ]
             )
-            ->add('url', 'text', ['label' => 'URL'])
-            ->add('contact', 'email', ['label' => 'Contact [@]', 'required' => false])
-            ->add('description', 'textarea', ['label' => 'Description', 'required' => false, 'attr' => ['rows' => 10]])
-            ->add('comment', 'textarea', ['label' => 'Comment', 'required' => false, 'attr' => ['rows' => 10]]);
+            ->add('url', TextType::class, ['label' => 'URL'])
+            ->add('contact', EmailType::class, ['label' => 'Contact [@]', 'required' => false])
+            ->add(
+                'description',
+                TextareaType::class,
+                ['label' => 'Description', 'required' => false, 'attr' => ['rows' => 10]]
+            )
+            ->add(
+                'comment',
+                TextareaType::class,
+                ['label' => 'Comment', 'required' => false, 'attr' => ['rows' => 10]]
+            );
     }
 
     /**
-     * @inheritdoc
+     * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -57,12 +67,11 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @inheritdoc
-     * @throws \RuntimeException When defining wrong or duplicate field names.
+     * @param ListMapper $listMapper
      */
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('idPartner')
+        $listMapper->addIdentifier('id')
             ->add('libPartner', null, ['label' => 'libPartner'])
             ->add('status')
             ->add('url', 'text', ['label' => 'URL'])
@@ -71,12 +80,11 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @inheritdoc
-     * @throws \RuntimeException When defining wrong or duplicate field names.
+     * @param ShowMapper $showMapper
      */
     protected function configureShowFields(ShowMapper $showMapper)
     {
-        $showMapper->add('idPartner')
+        $showMapper->add('id')
             ->add('libPartner')
             ->add('status')
             ->add('url')

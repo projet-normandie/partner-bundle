@@ -4,17 +4,26 @@ namespace ProjetNormandie\PartnerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Knp\DoctrineBehaviors\Model\Timestampable\Timestampable;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Partner
  *
- * @ORM\Table(name="partner", indexes={@ORM\Index(name="idxIdPartner", columns={"idPartner"})})
+ * @ORM\Table(name="partner")
  * @ORM\Entity(repositoryClass="ProjetNormandie\PartnerBundle\Repository\PartnerRepository")
+ * @ApiFilter(
+ *     SearchFilter::class,
+ *     properties={
+ *          "status": "exact",
+ *     }
+ * )
  */
-class Partner
+class Partner implements TimestampableInterface
 {
-    use Timestampable;
+    use TimestampableTrait;
 
     const STATUS_ACTIVE = 'ACTIVE';
     const STATUS_INACTIVE = 'INACTIVE';
@@ -24,11 +33,11 @@ class Partner
     /**
      * @var integer
      *
-     * @ORM\Column(name="idPartner", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idPartner;
+    private $id;
 
 
     /**
@@ -85,31 +94,31 @@ class Partner
      */
     public function __toString()
     {
-        return sprintf('Partner [%s]', $this->idPartner);
+        return sprintf('Partner [%s]', $this->id);
     }
 
 
     /**
-     * Set idPartner
+     * Set id
      *
-     * @param integer $idPartner
+     * @param integer $id
      * @return $this
      */
-    public function setIdPartner($idPartner)
+    public function setId(int $id)
     {
-        $this->idPartner = $idPartner;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get idPartner
+     * Get id
      *
      * @return integer
      */
-    public function getIdPartner()
+    public function getId()
     {
-        return $this->idPartner;
+        return $this->id;
     }
 
 
@@ -119,7 +128,7 @@ class Partner
      * @param string $libPartner
      * @return $this
      */
-    public function setLibPartner($libPartner)
+    public function setLibPartner(string $libPartner)
     {
         $this->libPartner = $libPartner;
         return $this;
@@ -141,7 +150,7 @@ class Partner
      * @param string $url
      * @return $this
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->url = $url;
         return $this;
@@ -163,7 +172,7 @@ class Partner
      * @param string $contact
      * @return $this
      */
-    public function setContact($contact)
+    public function setContact(string $contact)
     {
         $this->contact = $contact;
         return $this;
@@ -185,7 +194,7 @@ class Partner
      * @param string $status
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
         return $this;
@@ -207,7 +216,7 @@ class Partner
      * @param string $description
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
         return $this;
@@ -229,7 +238,7 @@ class Partner
      * @param string $comment
      * @return $this
      */
-    public function setComment($comment)
+    public function setComment(string $comment)
     {
         $this->comment = $comment;
         return $this;
