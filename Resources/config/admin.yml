@@ -2,7 +2,7 @@ services:
     sonata.admin.partner:
         class: ProjetNormandie\PartnerBundle\Admin\PartnerAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "PartnerBundle", label: "Partner" }
+            - { name: sonata.admin, manager_type: orm, group: "group.partners", label: "label.partner" }
         arguments:
             - ~
             - ProjetNormandie\PartnerBundle\Entity\Partner
