@@ -3,6 +3,7 @@
 namespace ProjetNormandie\PartnerBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -18,21 +19,20 @@ class PartnerAdmin extends AbstractAdmin
 {
     protected $baseRouteName = 'pnpartnerbundle_admin_partner';
 
-
     /**
      * @param RouteCollection $collection
      */
-    protected function configureRoutes(RouteCollection $collection)
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('export');
     }
 
     /**
-     * @param FormMapper $formMapper
+     * @param FormMapper $form
      */
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
+        $form->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
             ->add('libPartner', TextType::class, ['label' => 'libCategory'])
             ->add(
                 'status',
@@ -57,11 +57,11 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @param DatagridMapper $datagridMapper
+     * @param DatagridMapper $filter
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('libPartner')
             ->add('status');
     }
@@ -69,7 +69,7 @@ class PartnerAdmin extends AbstractAdmin
     /**
      * @param ListMapper $listMapper
      */
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper->addIdentifier('id')
             ->add('libPartner', null, ['label' => 'libPartner'])
@@ -80,11 +80,11 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ShowMapper $showMapper
+     * @param ShowMapper $show
      */
-    protected function configureShowFields(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $show): void
     {
-        $showMapper->add('id')
+        $show->add('id')
             ->add('libPartner')
             ->add('status')
             ->add('url')
