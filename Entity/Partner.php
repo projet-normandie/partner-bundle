@@ -31,63 +31,49 @@ class Partner implements TimestampableInterface
 
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private ?int $id = null;
 
 
     /**
-     * @var string
-     *
      * @Assert\Length(max="50")
      * @ORM\Column(name="libPartner", type="string", nullable=false)
      */
-    private $libPartner;
+    private string $libPartner;
 
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="url", type="string", nullable=false)
      */
-    private $url;
+    private string $url;
 
 
     /**
-     * @var string
-     *
      * @Assert\Email
-     * @ORM\Column(name="contact", type="string", nullable=false)
+     * @ORM\Column(name="contact", type="string", nullable=true)
      */
-    private $contact;
+    private ?string $contact = null;
 
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="status", type="string", nullable=false)
      */
-    private $status = self::STATUS_INACTIVE;
+    private string $status = self::STATUS_INACTIVE;
 
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="string", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="comment", type="string", nullable=true)
      */
-    private $comment;
+    private ?string $comment;
 
     /**
      * @return string
@@ -104,7 +90,7 @@ class Partner implements TimestampableInterface
      * @param integer $id
      * @return $this
      */
-    public function setId(int $id)
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -116,7 +102,7 @@ class Partner implements TimestampableInterface
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -128,7 +114,7 @@ class Partner implements TimestampableInterface
      * @param string $libPartner
      * @return $this
      */
-    public function setLibPartner(string $libPartner)
+    public function setLibPartner(string $libPartner): self
     {
         $this->libPartner = $libPartner;
         return $this;
@@ -139,7 +125,7 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getLibPartner()
+    public function getLibPartner(): string
     {
         return $this->libPartner;
     }
@@ -150,7 +136,7 @@ class Partner implements TimestampableInterface
      * @param string $url
      * @return $this
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
         return $this;
@@ -161,7 +147,7 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -172,7 +158,7 @@ class Partner implements TimestampableInterface
      * @param string $contact
      * @return $this
      */
-    public function setContact(string $contact)
+    public function setContact(string $contact): self
     {
         $this->contact = $contact;
         return $this;
@@ -183,7 +169,7 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getContact()
+    public function getContact(): ?string
     {
         return $this->contact;
     }
@@ -194,7 +180,7 @@ class Partner implements TimestampableInterface
      * @param string $status
      * @return $this
      */
-    public function setStatus(string $status)
+    public function setStatus(string $status): self
     {
         $this->status = $status;
         return $this;
@@ -205,18 +191,16 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
+     * @param string|null $description
      * @return $this
      */
-    public function setDescription(string $description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
         return $this;
@@ -227,18 +211,16 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * Set comment
-     *
-     * @param string $comment
+     * @param string|null $comment
      * @return $this
      */
-    public function setComment(string $comment)
+    public function setComment(?string $comment): self
     {
         $this->comment = $comment;
         return $this;
@@ -249,7 +231,7 @@ class Partner implements TimestampableInterface
      *
      * @return string
      */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -257,7 +239,7 @@ class Partner implements TimestampableInterface
     /**
      * @return array
      */
-    public static function getStatusChoices()
+    public static function getStatusChoices(): array
     {
         return [
             self::STATUS_ACTIVE => self::STATUS_ACTIVE,
