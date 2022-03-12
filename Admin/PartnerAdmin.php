@@ -67,11 +67,11 @@ class PartnerAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ListMapper $listMapper
+     * @param ListMapper $list
      */
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper->addIdentifier('id')
+        $list->addIdentifier('id')
             ->add('libPartner', null, ['label' => 'libPartner'])
             ->add('status')
             ->add('url', 'text', ['label' => 'URL'])
