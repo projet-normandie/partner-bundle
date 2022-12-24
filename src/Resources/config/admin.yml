@@ -2,6 +2,10 @@ services:
     sonata.admin.partner:
         class: ProjetNormandie\PartnerBundle\Admin\PartnerAdmin
         tags:
-            - { name: sonata.admin, model_class: 'ProjetNormandie\PartnerBundle\Entity\Partner', manager_type: orm, group: "group.partners", label: "label.partner" }
-        arguments: [ ~, ~, ~ ]
+            -
+                name: sonata.admin
+                model_class: 'ProjetNormandie\PartnerBundle\Entity\Partner'
+                manager_type: orm
+                group: "group.partners"
+                label: "label.partner"
 
