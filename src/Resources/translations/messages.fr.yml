@@ -1,2 +1,13 @@
+breadcrumb:
+    link_partner_list: 'Liste des partenaires'
 label:
+    id: 'id'
+    comment: 'Commentaire'
+    contact: 'Contact [@]'
+    description: 'Description'
+    libPartner: 'name'
+    status: 'Statut'
     partner: 'Partenaire'
+    url: 'URL'
+list:
+    label__action: 'Action'

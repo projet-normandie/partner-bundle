@@ -32,27 +32,26 @@ class PartnerAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->add('id', TextType::class, ['label' => 'id', 'attr' => ['readonly' => true]])
-            ->add('libPartner', TextType::class, ['label' => 'libCategory'])
+        $form->add('libPartner', TextType::class, ['label' => 'label.libPartner'])
             ->add(
                 'status',
                 ChoiceType::class,
                 [
-                    'label' => 'Status',
+                    'label' => 'label.status',
                     'choices' => Partner::getStatusChoices(),
                 ]
             )
-            ->add('url', TextType::class, ['label' => 'URL'])
-            ->add('contact', EmailType::class, ['label' => 'Contact [@]', 'required' => false])
+            ->add('url', TextType::class, ['label' => 'label.url'])
+            ->add('contact', EmailType::class, ['label' => 'label.contact', 'required' => false])
             ->add(
                 'description',
                 TextareaType::class,
-                ['label' => 'Description', 'required' => false, 'attr' => ['rows' => 10]]
+                ['label' => 'label.description', 'required' => false, 'attr' => ['rows' => 10]]
             )
             ->add(
                 'comment',
                 TextareaType::class,
-                ['label' => 'Comment', 'required' => false, 'attr' => ['rows' => 10]]
+                ['label' => 'label.comment', 'required' => false, 'attr' => ['rows' => 10]]
             );
     }
 
@@ -62,8 +61,8 @@ class PartnerAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('libPartner')
-            ->add('status');
+            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('status', null, ['label' => 'label.status']);
     }
 
     /**
@@ -71,11 +70,11 @@ class PartnerAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('id')
-            ->add('libPartner', null, ['label' => 'libPartner'])
-            ->add('status')
-            ->add('url', 'text', ['label' => 'URL'])
-            ->add('contact', 'text', ['label' => 'Contact'])
+        $list->addIdentifier('id', null, ['label' => 'label.id'])
+            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('status', null, ['label' => 'label.status'])
+            ->add('url', 'text', ['label' => 'label.url'])
+            ->add('contact', 'text', ['label' => 'label.contact'])
             ->add('_action', 'actions', ['actions' => ['show' => [], 'edit' => []]]);
     }
 
@@ -84,12 +83,12 @@ class PartnerAdmin extends AbstractAdmin
      */
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('id')
-            ->add('libPartner')
-            ->add('status')
-            ->add('url')
-            ->add('contact')
-            ->add('description')
-            ->add('comment');
+        $show->add('id', null, ['label' => 'label.id'])
+            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('status', null, ['label' => 'label.status'])
+            ->add('url', null, ['label' => 'label.url'])
+            ->add('contact', null, ['label' => 'label.contact'])
+            ->add('description', null, ['label' => 'label.description'])
+            ->add('comment', null, ['label' => 'label.comment']);
     }
 }
