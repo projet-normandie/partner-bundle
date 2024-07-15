@@ -5,7 +5,7 @@ label:
     comment: 'Commentaire'
     contact: 'Contact [@]'
     description: 'Description'
-    libPartner: 'name'
+    name: 'name'
     status: 'Statut'
     partner: 'Partenaire'
     url: 'URL'

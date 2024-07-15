@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\PartnerBundle\Admin;
 
+use ProjetNormandie\PartnerBundle\ValueObject\PartnerStatus;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -10,14 +13,13 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use ProjetNormandie\PartnerBundle\Entity\Partner;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PartnerAdmin extends AbstractAdmin
 {
-    protected $baseRouteName = 'pnpartnerbundle_admin_partner';
+    protected $baseRouteName = 'pnp_partner_admin';
 
     /**
      * @param RouteCollection $collection
@@ -32,13 +34,13 @@ class PartnerAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->add('libPartner', TextType::class, ['label' => 'label.libPartner'])
+        $form->add('name', TextType::class, ['label' => 'label.name'])
             ->add(
                 'status',
                 ChoiceType::class,
                 [
                     'label' => 'label.status',
-                    'choices' => Partner::getStatusChoices(),
+                    'choices' => PartnerStatus::getStatusChoices(),
                 ]
             )
             ->add('url', TextType::class, ['label' => 'label.url'])
@@ -61,7 +63,7 @@ class PartnerAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('name', null, ['label' => 'label.name'])
             ->add('status', null, ['label' => 'label.status']);
     }
 
@@ -71,7 +73,7 @@ class PartnerAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list->addIdentifier('id', null, ['label' => 'label.id'])
-            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('name', null, ['label' => 'label.name'])
             ->add('status', null, ['label' => 'label.status'])
             ->add('url', 'text', ['label' => 'label.url'])
             ->add('contact', 'text', ['label' => 'label.contact'])
@@ -84,7 +86,7 @@ class PartnerAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show->add('id', null, ['label' => 'label.id'])
-            ->add('libPartner', null, ['label' => 'label.libPartner'])
+            ->add('name', null, ['label' => 'label.name'])
             ->add('status', null, ['label' => 'label.status'])
             ->add('url', null, ['label' => 'label.url'])
             ->add('contact', null, ['label' => 'label.contact'])
