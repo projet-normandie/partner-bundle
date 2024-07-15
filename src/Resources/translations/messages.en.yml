@@ -5,7 +5,9 @@ label:
     comment: 'Comment'
     contact: 'Contact [@]'
     description: 'Description'
-    libPartner: 'name'
+    name: 'name'
     status: 'Status'
     partner: 'Partners'
     url: 'URL'
+list:
+    label__action: 'Action'

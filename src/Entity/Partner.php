@@ -1,250 +1,144 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProjetNormandie\PartnerBundle\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use ProjetNormandie\PartnerBundle\Repository\PartnerRepository;
+use ProjetNormandie\PartnerBundle\ValueObject\PartnerStatus;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Partner
- *
- * @ORM\Table(name="partner")
- * @ORM\Entity(repositoryClass="ProjetNormandie\PartnerBundle\Repository\PartnerRepository")
- * @ApiFilter(
- *     SearchFilter::class,
- *     properties={
- *          "status": "exact",
- *     }
- * )
- */
+#[ORM\Table(name:'pnp_partner')]
+#[ORM\Entity(repositoryClass: PartnerRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(),
+    ],
+    normalizationContext: ['groups' => ['partner:read']]
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'status' => 'exact',
+    ]
+)]
 class Partner implements TimestampableInterface
 {
     use TimestampableTrait;
 
-    const STATUS_ACTIVE = 'ACTIVE';
-    const STATUS_INACTIVE = 'INACTIVE';
-    const STATUS_CANCELED = 'CANCELED';
-
-
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[Groups(['partner:read'])]
+    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     private ?int $id = null;
 
+    #[Groups(['partner:read'])]
+    #[ORM\Column(length: 50, nullable: false)]
+    private string $name;
 
-    /**
-     * @Assert\Length(max="50")
-     * @ORM\Column(name="libPartner", type="string", nullable=false)
-     */
-    private string $libPartner;
-
-
-    /**
-     * @ORM\Column(name="url", type="string", nullable=false)
-     */
+    #[Groups(['partner:read'])]
+    #[ORM\Column(length: 255, nullable: false)]
     private string $url;
 
-
-    /**
-     * @Assert\Email
-     * @ORM\Column(name="contact", type="string", nullable=true)
-     */
+    #[Assert\Email]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $contact = null;
 
+    #[ORM\Column(length: 30, nullable: false)]
+    private string $status = PartnerStatus::INACTIVE;
 
-    /**
-     * @ORM\Column(name="status", type="string", nullable=false)
-     */
-    private string $status = self::STATUS_INACTIVE;
-
-
-    /**
-     * @ORM\Column(name="description", type="string", nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description;
 
-
-    /**
-     * @ORM\Column(name="comment", type="string", nullable=true)
-     */
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment;
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
         return sprintf('Partner [%s]', $this->id);
     }
 
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return $this
-     */
-    public function setId(int $id): self
+    public function setId(int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-
-    /**
-     * Set libPartner
-     *
-     * @param string $libPartner
-     * @return $this
-     */
-    public function setLibPartner(string $libPartner): self
+    public function setName(string $name): void
     {
-        $this->libPartner = $libPartner;
-        return $this;
+        $this->name = $name;
     }
 
-    /**
-     * Get libPartner
-     *
-     * @return string
-     */
-    public function getLibPartner(): string
+    public function getName(): string
     {
-        return $this->libPartner;
+        return $this->name;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return $this
-     */
-    public function setUrl(string $url): self
+    public function setUrl(string $url): void
     {
         $this->url = $url;
-        return $this;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * Set contact
-     *
-     * @param string $contact
-     * @return $this
-     */
-    public function setContact(string $contact): self
+    public function setContact(string $contact): void
     {
         $this->contact = $contact;
-        return $this;
     }
 
-    /**
-     * Get contact
-     *
-     * @return string
-     */
     public function getContact(): ?string
     {
         return $this->contact;
     }
 
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return $this
-     */
-    public function setStatus(string $status): self
+    public function setStatus(string $status): void
     {
-        $this->status = $status;
-        return $this;
+        $value = new PartnerStatus($status);
+        $this->status = $value->getValue();
     }
 
-    /**
-     * Get status
-     *
-     * @return string
-     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @param string|null $description
-     * @return $this
-     */
-    public function setDescription(?string $description): self
+    public function getPartnerStatus(): PartnerStatus
     {
-        $this->description = $description;
-        return $this;
+        return new PartnerStatus($this->status);
     }
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $comment
-     * @return $this
-     */
-    public function setComment(?string $comment): self
+    public function setComment(?string $comment): void
     {
         $this->comment = $comment;
-        return $this;
     }
 
-    /**
-     * Get comment
-     *
-     * @return string
-     */
     public function getComment(): ?string
     {
         return $this->comment;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getStatusChoices(): array
-    {
-        return [
-            self::STATUS_ACTIVE => self::STATUS_ACTIVE,
-            self::STATUS_INACTIVE => self::STATUS_INACTIVE,
-            self::STATUS_CANCELED => self::STATUS_CANCELED,
-        ];
     }
 }

@@ -1,5 +1,0 @@
-resources:
-    ProjetNormandie\PartnerBundle\Entity\Partner:
-        collectionOperations:
-            get:
-                normalization_context: {'groups': [partner.read]}
